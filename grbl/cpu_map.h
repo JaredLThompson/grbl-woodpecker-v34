@@ -60,13 +60,22 @@
   #define LIMIT_DDR        DDRB
   #define LIMIT_PIN        PINB
   #define LIMIT_PORT       PORTB
-  #define X_LIMIT_BIT      1  // Uno Digital Pin 9
-  #define Y_LIMIT_BIT      2  // Uno Digital Pin 10
-  #ifdef VARIABLE_SPINDLE // Z Limit pin and spindle enabled swapped to access hardware PWM on Pin 11.
-    #define Z_LIMIT_BIT	   4 // Uno Digital Pin 12
+  
+  // Woodpecker CNC CAMXTOOL v3.4 limit connector mapping.
+  // With VARIABLE_SPINDLE:
+  //   X_End -> D12
+  //   Y_End -> D10
+  //   Z_End -> D9
+  #ifdef VARIABLE_SPINDLE
+    #define X_LIMIT_BIT    4  // Uno Digital Pin 12 - X_End
+    #define Y_LIMIT_BIT    2  // Uno Digital Pin 10 - Y_End
+    #define Z_LIMIT_BIT    1  // Uno Digital Pin 9  - Z_End
   #else
+    #define X_LIMIT_BIT    1  // Uno Digital Pin 9
+    #define Y_LIMIT_BIT    2  // Uno Digital Pin 10
     #define Z_LIMIT_BIT    3  // Uno Digital Pin 11
   #endif
+
   #if !defined(ENABLE_DUAL_AXIS)
     #define LIMIT_MASK     ((1<<X_LIMIT_BIT)|(1<<Y_LIMIT_BIT)|(1<<Z_LIMIT_BIT)) // All limit bits
   #endif
